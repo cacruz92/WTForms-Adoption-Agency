@@ -18,5 +18,24 @@ def show_homepage():
     pets = Pet.query.all()
     return render_template(pet_list.html, pets=pets)
 
+@app.route('/add', methods=['GET', 'POST'])
+def add_pet():
+    """Pet add form; handle adding"""
+
+    form = AddPetForm()
+
+    if form.validate_on_submit():
+        name = form.name.data
+        species = form.species.data
+        photo_url = form.photo_url.data
+        age = form.age.data
+        notes = form.notes.data
+
+        flash(f"Added {name} the {species}")
+        return redirect('/')
+    
+    else:
+        return render_template('add_pet_form.html', form=form)
+
 if __name__ == '__main__':
     app.run()
