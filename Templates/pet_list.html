@@ -8,9 +8,15 @@ Pets
 <ul>
 {% for pet in pets %}
 <div>
+    <a href="/pets/{{pet.id}}/edit">
     <img src="{{pet.photo_url}}" alt="{{pet.species}}" height="200" width="200" border="2">
+    </a>
     <p>{{pet.name}}
-    {% if pet.available %} <b>is available!</b> {% endif %}
+    {% if pet.available %} 
+    <b>is available!</b> 
+    {% else %}
+    !
+    {% endif %}
     </p>
 </div>
 {% endfor %}

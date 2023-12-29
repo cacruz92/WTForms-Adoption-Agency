@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Pet
 from flask_sqlalchemy import SQLAlchemy
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///adopt'
@@ -47,6 +47,26 @@ def add_pet():
     
     else:
         return render_template('add_pet_form.html', form=form)
+    
+
+@app.route("/pets/<int:pid>/edit", methods=["GET", "POST"])
+def edit_pet(pid):
+    """Show pet edit form and handle edit."""
+
+    pet = Pet.query.get_or_404(pid)
+    form = EditPetForm(obj=pet)
+
+    if form.validate_on_submit():
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+        
+        db.session.commit()
+        flash(f"{pet.name} updated!")
+        return redirect('/')
+
+    else:
+        return render_template("edit_pet_form.html", form=form, pet=pet)
 
 if __name__ == '__main__':
     app.run()
