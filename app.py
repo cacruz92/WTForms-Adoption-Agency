@@ -14,6 +14,8 @@ connect_db(app)
 app.config['SECRET_KEY'] = "SECRET!"
 debug = DebugToolbarExtension(app)
 
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
 with app.app_context():
     db.create_all()
 
@@ -40,7 +42,7 @@ def add_pet():
         db.session.add(new_pet)
         db.session.commit()
 
-        flash(f"Added {name} the {species}")
+        flash(f"Added {name} the {species}", 'success')
         return redirect('/')
     
     else:
