@@ -36,7 +36,7 @@ def add_pet():
         age = form.age.data
         notes = form.notes.data
 
-        new_pet = Pet(name=name, species=species, photo_url=photo_url, age=age, note=notes)
+        new_pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes)
         db.session.add(new_pet)
         db.commit()
 

@@ -6,7 +6,7 @@ Add Pet
 
 {% block content %}
 
-<form action="/add" id="add-pet-form" methods="POST">
+<form action="/add" id="add-pet-form" method="POST">
     {{form.hidden_tag()}}
 
     {% for field in form
